@@ -1,12 +1,13 @@
 <?
-$filename = 'combined.txt';
+$filename = 'analyzeFilename.txt';
+$regularExpression = "~=(.*?)&~";
 $handle = fopen($filename, 'r');
 set_time_limit(3000);
 $result = [];
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
         $matchedArr;
-        preg_match('~SUBSCRIPTION=(.*?)&~', $line, $matchedArr);
+        preg_match($regularExpression, $line, $matchedArr);
         if(count($matchedArr)<1) continue;
         $ippName = $matchedArr[1];
         $record_exist = false;
@@ -34,7 +35,7 @@ printf('IPP Usage Analyzer');
 
 <table style="border-collapse: collapse;">
     <tr>
-        <th style="border: 1px solid black;">IPP name</th>
+        <th style="border: 1px solid black;">Name</th>
         <th style="border: 1px solid black;">count</th>
     </tr>
     <?php foreach($result as $key => $value):?>
